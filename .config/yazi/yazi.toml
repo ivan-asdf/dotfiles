@@ -1,0 +1,20 @@
+[manager]
+ratio = [2, 3, 6]
+sort_by = "natural"
+sort_dir_first = true
+
+[[plugin.prepend_preloaders]]
+mime = "image/tiff"
+run = "raw"
+
+[[plugin.prepend_preloaders]]
+mime = "image/x-canon-cr2"
+run = "raw"
+
+[preview]
+max_height = 1440
+max_width = 2560
+
+[tasks]
+macro_workers = 3
+micro_workers = 5

@@ -1,0 +1,9 @@
+[[manager.prepend_keymap]]
+desc = "Toggle hidden files"
+on = ["<C-h>"]
+run = "hidden toggle"
+
+[[manager.prepend_keymap]]
+desc = "Open shell here"
+on = ["<C-s>"]
+run = "shell \"$SHELL\" --block --confirm"
