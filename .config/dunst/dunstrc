@@ -1,0 +1,45 @@
+[global]
+mouse_left_click = context
+mouse_middle_click = close_current
+dmenu = wofi -dmenu
+browser = xdg-open
+
+transparency = 33
+offset = 10x20
+
+font = Noto Sans 11  # Replace with actual font (e.g., "DejaVu Sans 11")
+markup = full
+format = <big><b>%s</b></big>\n%b\n<sub><i>%a</i></sub>
+
+idle_threshold = 0
+show_age_threshold = 30
+
+# Icon theme (requires Papirus-Dark icons installed)
+icon_theme = Papirus-Dark
+
+# Theme settings (example - modify with your theme colors)
+[urgency_low]
+default_icon = /usr/share/icons/Papirus-Dark/32x32/status/dialog-information.svg
+background = "#2E3440"
+foreground = "#D8DEE9"
+frame_color = "#3B4252"
+timeout = 4
+
+[urgency_normal]
+default_icon = /usr/share/icons/Papirus-Dark/32x32/status/dialog-information.svg
+background = "#2E3440"
+foreground = "#D8DEE9"
+frame_color = "#3B4252"
+timeout = 6
+
+[urgency_critical]
+default_icon = /usr/share/icons/Papirus-Dark/32x32/status/dialog-error.svg
+# background = "#900000"
+# foreground = "#FFFFFF"
+# frame_color = "#FF0000"
+frame_color = "#e82424"
+timeout = 0
+
+[play_normal_sound]
+summary = *
+script = ~/.config/dunst/play_notification_sound.sh
