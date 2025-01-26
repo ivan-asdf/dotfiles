@@ -1,0 +1,5 @@
+theme = Kanagawa Dragon
+window-decoration = false
+font-family = "Hack"
+font-size = 11
+gtk-single-instance = true
