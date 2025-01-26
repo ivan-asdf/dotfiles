@@ -1,0 +1,18 @@
+[Unit]
+Description=Hyprland Compositor (TTY1)
+ConditionUser=!root
+# ConditionPathExists=/sys/class/tty/tty1/active
+
+[Service]
+Type=simple
+# ExecCondition=/usr/bin/bash -c 'test "$(tty)" = /dev/tty1'
+# ExecStart=/usr/bin/bash -c 'echo "TTY: $(tty)" > /tmp/tty.log'
+ExecCondition=/usr/bin/bash -c 'test "$(cat /sys/class/tty/tty0/active)" = tty1'
+ExecStart=/usr/bin/Hyprland
+ExecStopPost=/usr/bin/pkill -u $USER Hyprland
+Restart=on-failure
+RestartSec=3
+# Environment=XCURSOR_SIZE=24
+
+[Install]
+WantedBy=default.target
