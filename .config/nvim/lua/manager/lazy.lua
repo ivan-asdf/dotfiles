@@ -35,12 +35,12 @@ local plugins = {
     },
   },
 
-  -- Mason
-  {
-    'williamboman/mason.nvim',
-    lazy = false,
-  },
-  "williamboman/mason-lspconfig.nvim", -- for usage with nvim-lspconfig
+  -- -- Mason
+  -- {
+  --   'williamboman/mason.nvim',
+  --   lazy = false,
+  -- },
+  -- "williamboman/mason-lspconfig.nvim", -- for usage with nvim-lspconfig
 
   -- Treesitter(highlighting)
   'nvim-treesitter/nvim-treesitter', -- run= ':TSUpdate'
@@ -59,8 +59,8 @@ local plugins = {
   'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
   'L3MON4D3/LuaSnip',         -- Snippets plugin
 
-  -- Null ls(Lsp config for python)
-  'jose-elias-alvarez/null-ls.nvim',
+  -- -- Null ls(Lsp config for python)
+  -- 'jose-elias-alvarez/null-ls.nvim',
 
   -- Telescope
   {
