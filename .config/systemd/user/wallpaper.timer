@@ -1,0 +1,8 @@
+[Unit]
+Description=Run hourly job
+
+[Timer]
+OnCalendar=*:00
+
+[Install]
+WantedBy=default.target

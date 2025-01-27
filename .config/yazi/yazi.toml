@@ -2,6 +2,7 @@
 ratio = [2, 3, 6]
 sort_by = "natural"
 sort_dir_first = true
+linemode = "size"
 
 [[plugin.prepend_preloaders]]
 mime = "image/tiff"

@@ -1,0 +1,11 @@
+[Unit]
+Description=Start swww-daemon(needed by waypaper)
+Requires=hyprland.service
+After=hyprland.service
+
+[Service]
+ExecStart=swww-daemon
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

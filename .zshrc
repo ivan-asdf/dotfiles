@@ -94,6 +94,11 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# zsh-autocomplete
+# make Tab and Shift Tab cycle instead of automaticly completing
+bindkey              '^I'         menu-complete
+bindkey "$terminfo[kcbt]" reverse-menu-complete
+
 # auto-notify
 export AUTO_NOTIFY_THRESHOLD=5
 AUTO_NOTIFY_IGNORE+=("git diff" "lf" "yazi")
