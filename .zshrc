@@ -76,6 +76,7 @@ plugins=(
   zsh-autocomplete
   you-should-use
   auto-notify
+  command-not-found
 
   git
   sudo
