@@ -1,0 +1,9 @@
+ dbus-send --session --dest=com.ddcutil.DdcutilService \
+--type=method_call --print-reply \
+/com/ddcutil/DdcutilObject \
+com.ddcutil.DdcutilInterface.SetVcp \
+int32:1    \
+string:""  \
+byte:16    \
+uint16:$1  \
+uint32:0

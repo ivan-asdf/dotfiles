@@ -1,7 +1,9 @@
 [Unit]
 Description=Set random wallpaper
-Requires=swww-deamon.service
-After=swww-deamon.service
+; Requires=swww-daemon.service
+; After=swww-daemon.service
+; After=graphical-session.target
+; Requires=graphical-session.target
 
 [Service]
 Type=oneshot
@@ -9,3 +11,4 @@ ExecStart=waypaper --random
 
 [Install]
 WantedBy=default.target
+; WantedBy=graphical-session.target

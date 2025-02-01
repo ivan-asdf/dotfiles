@@ -35,7 +35,7 @@
     (button :onclick "hyprctl dispatch workspace 7" 7)))
 
 (defwidget sidestuff []
-  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+  (box :class "sidestuff" :orientation "h" :space-evenly false
     (metric :label "🔊"
             :value volume
             :onchange "pamixer --set-volume {}")
@@ -45,7 +45,13 @@
     (metric :label "💾"
             :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
             :onchange "")
-    time))
+    (metric :label "🔆"
+            :value brightness
+            ;; :drawvalue
+            ;; :onchange "ddcutil setvcp 10 {} --noverify --sleep-multiplier=0.1")
+            :onchange "scripts/setbrightness {}")
+    brightness
+    ))
 
 
 (defwidget metric [label value onchange]
@@ -54,11 +60,13 @@
        :space-evenly false
     (box :class "label" label)
     (scale :min 0
-           :max 101
-           :width 300
+           :max 100
+           :width 200
            :active {onchange != ""}
            :value value
-           :onchange onchange)))
+           :onchange onchange
+           ;; :draw-value true
+           :timeout "5s")))
 
 
 (defpoll time :interval "200ms"
@@ -66,3 +74,12 @@
 
 (defpoll volume :initial "50" :interval "1s"
   "scripts/getvol")
+
+;; (defpoll test :interval "1s" `echo $RANDOM`)
+
+;; (defpoll brightness :initial "80" :interval "1s"
+;;   `ddcutil getvcp 10 --noverify --sleep-multiplier=0.1 | grep -oP 'current value =*+\\K2'`)
+;; (defpoll brightness :initial "80" :interval "1s"
+;;   `ddcutil getvcp 10 | grep -oP 'current value =*+\\K2'`)
+(defpoll brightness :initial "80" :interval "3s"
+  "scripts/getbrightness")

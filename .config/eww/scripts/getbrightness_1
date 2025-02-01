@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ddcutil getvcp 10 --noverify --sleep-multiplier=0.1 | grep -oP 'current value = *+\K\d+'
