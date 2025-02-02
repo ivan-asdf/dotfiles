@@ -14,43 +14,42 @@
 )
 
 (defwidget bar []
-  (centerbox :orientation "h"
-    (workspaces)
-    ;; (music)
+  (centerbox
     time
-    (sidestuff)))
+    (workspaces :width 20)
+    (sidestuff)
+    ))
 
-(defwidget workspaces []
-  (box :class "workspaces"
-       :orientation "h"
-       :space-evenly true
-       :halign "start"
-       :spacing 10
-    (button :onclick "hyprctl dispatch workspace 1" 1)
-    (button :onclick "hyprctl dispatch workspace 2" 2)
-    (button :onclick "hyprctl dispatch workspace 3" 3)
-    (button :onclick "hyprctl dispatch workspace 4" 4)
-    (button :onclick "hyprctl dispatch workspace 5" 5)
-    (button :onclick "hyprctl dispatch workspace 6" 6)
-    (button :onclick "hyprctl dispatch workspace 7" 7)))
+(defpoll used_mem :interval "1s"
+`free | awk '/Mem/ {printf "%.1f", $3 / 1024 / 1024}'`)
+(defpoll total_mem :interval "1s"
+`free | awk '/Mem/ {printf "%.1f", $2 / 1024 / 1024}'`)
 
 (defwidget sidestuff []
-  (box :class "sidestuff" :orientation "h" :space-evenly false
-    (metric :label "🔊"
+  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+    (metric :label "🔊 ${volume}"
             :value volume
             :onchange "pamixer --set-volume {}")
-    (metric :label ""
-            :value {EWW_RAM.used_mem_perc}
+    (metric :label "🚃   ${used_mem}/${total_mem}"
+            ;; :value {EWW_RAM.used_mem_perc}
+            :value used_mem
             :onchange "")
+    (circular-progress
+            :class "circle"
+            :value {EWW_RAM.used_mem_perc}
+            :start-at 20
+            :thickness 3
+            :width 28
+            )
     (metric :label "💾"
             :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
             :onchange "")
-    (metric :label "🔆"
+    (metric :label "🔆 ${brightness}"
             :value brightness
             ;; :drawvalue
             ;; :onchange "ddcutil setvcp 10 {} --noverify --sleep-multiplier=0.1")
             :onchange "scripts/setbrightness {}")
-    brightness
+    ;; (calendar)
     ))
 
 
@@ -75,11 +74,22 @@
 (defpoll volume :initial "50" :interval "1s"
   "scripts/getvol")
 
-;; (defpoll test :interval "1s" `echo $RANDOM`)
-
-;; (defpoll brightness :initial "80" :interval "1s"
-;;   `ddcutil getvcp 10 --noverify --sleep-multiplier=0.1 | grep -oP 'current value =*+\\K2'`)
-;; (defpoll brightness :initial "80" :interval "1s"
-;;   `ddcutil getvcp 10 | grep -oP 'current value =*+\\K2'`)
 (defpoll brightness :initial "80" :interval "3s"
   "scripts/getbrightness")
+
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
+(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
+(defwidget workspaces []
+  (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget"
+    (box :space-evenly false :width 40
+      (label :text "${workspaces}${current_workspace}" :visible false)
+      (for workspace in workspaces
+        (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}" :visible "${workspace.windows > 0 ? "true" : "false"}"
+          (box :class "workspace-entry ${workspace.windows > 0 ? "occupied" : "empty"} ${workspace.id == current_workspace ? "current" : ""}"
+            (label :text "${workspace.id}" :width 30)
+            )
+          )
+        )
+      )
+    )
+  )

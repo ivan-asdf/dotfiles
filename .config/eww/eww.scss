@@ -1,13 +1,9 @@
+* { all: unset; }
 
-
-// Global Styles
 .bar {
-  background-color: #3a3a3a;
-  color: #b0b4bc;
   padding: 10px;
 }
 
-// Styles on classes (see eww.yuck for more information)
 
 .sidestuff slider {
   all: unset;
@@ -37,4 +33,27 @@
 
 .workspaces button:hover {
   color: #D35D6E;
+}
+
+.workspace-entry {
+  color: #1D1D1D;
+  font-weight: bold;
+  border-radius: 50%;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+.occupied {
+  color: #C0BB90;
+  background-color: #1D1D1D;
+}
+
+.current {
+  background-color: #C0BB90;
+  color: #1D1D1D;
+}
+
+.circle {
+  color: red;
+  background-color: gray;
 }
