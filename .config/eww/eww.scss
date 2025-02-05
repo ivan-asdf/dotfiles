@@ -1,8 +1,8 @@
 * { all: unset; }
 
-.bar {
-  padding: 10px;
-}
+/* .bar { */
+/*   padding: 10px; */
+/* } */
 
 
 .sidestuff slider {
@@ -54,6 +54,29 @@
 }
 
 .circle {
-  color: red;
+  color: #DE7077;
   background-color: gray;
+  margin-top: 3px;
+}
+
+.metric {
+  color: #C0BB90;
+  background-color: #1D1D1D;
+  /* border: 2px solid black; */
+  border-radius: 10px;
+  margin-left: 7px;
+  margin-right: 7px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+tooltip {
+  color: #C0BB90;
+  background-color: #1D1D1D;
+}
+
+label {
+  font-size: 17px;
 }

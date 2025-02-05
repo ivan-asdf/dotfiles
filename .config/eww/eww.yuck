@@ -1,3 +1,5 @@
+(include "workspaces.yuck")
+
 (defwindow main
            :monitor 0
            :geometry (geometry :x "0%"
@@ -15,41 +17,39 @@
 
 (defwidget bar []
   (centerbox
-    time
-    (workspaces :width 20)
-    (sidestuff)
+    (left)
+    (workspaces)
+    (right)
     ))
+
+
+(defwidget left []
+  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "start"
+    (circle-display :icon "🚃" :tooltip "${used_mem}/${total_mem}" :value {EWW_RAM.used_mem_perc})
+    (circle-display :icon "💾" :tooltip storage :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)})
+  )
+)
 
 (defpoll used_mem :interval "1s"
 `free | awk '/Mem/ {printf "%.1f", $3 / 1024 / 1024}'`)
 (defpoll total_mem :interval "1s"
 `free | awk '/Mem/ {printf "%.1f", $2 / 1024 / 1024}'`)
 
-(defwidget sidestuff []
+(defwidget right []
   (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
     (metric :label "🔊 ${volume}"
             :value volume
             :onchange "pamixer --set-volume {}")
-    (metric :label "🚃   ${used_mem}/${total_mem}"
-            ;; :value {EWW_RAM.used_mem_perc}
-            :value used_mem
-            :onchange "")
-    (circular-progress
-            :class "circle"
-            :value {EWW_RAM.used_mem_perc}
-            :start-at 20
-            :thickness 3
-            :width 28
-            )
-    (metric :label "💾"
-            :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-            :onchange "")
     (metric :label "🔆 ${brightness}"
             :value brightness
             ;; :drawvalue
             ;; :onchange "ddcutil setvcp 10 {} --noverify --sleep-multiplier=0.1")
             :onchange "scripts/setbrightness {}")
+    ;; (metric :label "💾"
+    ;;         :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+    ;;         :onchange "")
     ;; (calendar)
+    (label :class "metric" :text time :space-evenly false :halign "end")
     ))
 
 
@@ -57,7 +57,8 @@
   (box :orientation "h"
        :class "metric"
        :space-evenly false
-    (box :class "label" label)
+    ;; (box :class "label" label)
+    (label :text label)
     (scale :min 0
            :max 100
            :width 200
@@ -67,6 +68,19 @@
            ;; :draw-value true
            :timeout "5s")))
 
+(defwidget circle-display [icon tooltip value]
+    (box :class "metric" :space-evenly false :tooltip tooltip
+      (label :text icon)
+      (circular-progress
+              :class "circle"
+              ;; :value {EWW_RAM.used_mem_perc}
+              :value value
+              :start-at 20
+              :thickness 3
+              :width 28
+              )
+            )
+)
 
 (defpoll time :interval "200ms"
   `date +%H:%M:%S`)
@@ -77,19 +91,5 @@
 (defpoll brightness :initial "80" :interval "3s"
   "scripts/getbrightness")
 
-(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
-(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
-(defwidget workspaces []
-  (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget"
-    (box :space-evenly false :width 40
-      (label :text "${workspaces}${current_workspace}" :visible false)
-      (for workspace in workspaces
-        (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}" :visible "${workspace.windows > 0 ? "true" : "false"}"
-          (box :class "workspace-entry ${workspace.windows > 0 ? "occupied" : "empty"} ${workspace.id == current_workspace ? "current" : ""}"
-            (label :text "${workspace.id}" :width 30)
-            )
-          )
-        )
-      )
-    )
-  )
+(defpoll storage :interval "10s"
+  "df -h / | awk 'NR>1 {print $3 \"/\" $2}'")
