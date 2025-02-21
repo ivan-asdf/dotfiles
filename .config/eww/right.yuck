@@ -1,0 +1,46 @@
+(defpoll volume :initial "50" :interval "1s"
+  "scripts/getvol")
+
+(defpoll brightness :initial "80" :interval "3s"
+  "scripts/getbrightness")
+
+(defpoll time :interval "200ms"
+  `date +%H:%M:%S`)
+
+(defwidget right []
+  (box :orientation "h" :space-evenly false :halign "end"
+    (metric
+      :icon "🔊"
+      :value volume
+      :onchange "pamixer --set-volume {}")
+    (metric
+      :icon "🔆"
+      :value brightness
+      :onchange "scripts/setbrightness {}")
+    (label
+      :class "metric"
+      :text time
+      :space-evenly false
+      :halign "end"
+    )
+  )
+)
+
+(defwidget metric [icon value onchange]
+  (box
+    :orientation "h"
+    :class "metric"
+    :space-evenly false
+    (label :text "${icon} ${value}")
+    (scale
+      :min 0
+      :max 100
+      :width 200
+      :active {onchange != ""}
+      :value value
+      :onchange onchange
+      ;; :draw-value true
+      :timeout "5s"
+    )
+  )
+)

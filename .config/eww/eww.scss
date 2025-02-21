@@ -1,15 +1,5 @@
 * { all: unset; }
 
-/* .bar { */
-/*   padding: 10px; */
-/* } */
-
-
-.sidestuff slider {
-  all: unset;
-  color: #ffd5cd;
-}
-
 .metric scale trough highlight {
   all: unset;
   background-color: #D35D6E;
@@ -27,14 +17,16 @@
   margin-right: 20px;
 }
 
-.label-ram {
-  font-size: large;
+tooltip {
+  color: #C0BB90;
+  background-color: #1D1D1D;
 }
 
-.workspaces button:hover {
-  color: #D35D6E;
+label {
+  font-size: 17px;
 }
 
+// Workspace
 .workspace-entry {
   color: #1D1D1D;
   font-weight: bold;
@@ -43,12 +35,12 @@
   margin-left: 3px;
 }
 
-.occupied {
+.workspace-entry.occupied {
   color: #C0BB90;
   background-color: #1D1D1D;
 }
 
-.current {
+.workspace-entry.current {
   background-color: #C0BB90;
   color: #1D1D1D;
 }
@@ -62,7 +54,6 @@
 .metric {
   color: #C0BB90;
   background-color: #1D1D1D;
-  /* border: 2px solid black; */
   border-radius: 10px;
   margin-left: 7px;
   margin-right: 7px;
@@ -72,11 +63,13 @@
   padding-bottom: 2px;
 }
 
-tooltip {
-  color: #C0BB90;
-  background-color: #1D1D1D;
+// Cpu bar
+.cpu-scale scale trough highlight {
+  background-color: #D35D6E;
 }
 
-label {
-  font-size: 17px;
+.cpu-scale scale trough {
+  background-color: #4e4e4e;
+  border: 1px solid black;
+  min-width: 17px;
 }
