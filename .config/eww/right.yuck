@@ -9,6 +9,7 @@
 
 (defwidget right []
   (box :orientation "h" :space-evenly false :halign "end"
+    (systray)
     (metric
       :icon "🔊"
       :value volume

@@ -7,7 +7,8 @@ Description=Set random wallpaper
 
 [Service]
 Type=oneshot
-ExecStart=waypaper --random
+; ExecStart=waypaper --random
+ExecStart=%h/.local/share/set_random_wallpaper.sh
 
 [Install]
 WantedBy=default.target

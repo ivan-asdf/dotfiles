@@ -17,11 +17,6 @@
   margin-right: 20px;
 }
 
-tooltip {
-  color: #C0BB90;
-  background-color: #1D1D1D;
-}
-
 label {
   font-size: 17px;
 }
@@ -72,4 +67,23 @@ label {
   background-color: #4e4e4e;
   border: 1px solid black;
   min-width: 17px;
+}
+
+//Misc
+systray {
+  color: red;
+  background-color: red;
+
+}
+
+tooltip, menu{
+  color: #C0BB90;
+  background-color: #1D1D1D;
+  padding: 8px;
+  font-weight: 600;
+}
+
+menuitem:hover {
+  background-color: #C0BB90;
+  color: #1D1D1D;
 }
